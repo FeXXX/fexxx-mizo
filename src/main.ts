@@ -2,4 +2,10 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 
-createApp(App).use(router).mount("#app");
+import "animate.css";
+import "@/styles/reset.scss";
+import "@/styles/animate.css";
+
+import { Button } from "vant";
+
+createApp(App).use(router).use(Button).mount("#app");
