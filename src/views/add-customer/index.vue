@@ -3,6 +3,8 @@
 import router from "@/router";
 import { ref } from "vue";
 import { phone_reg, phone_waring_text } from "@/utils/validate";
+import { apiInfo } from "@/utils/domain";
+
 import axios from "axios";
 import { showNotify } from "vant";
 
@@ -21,9 +23,7 @@ const phoneNumberValidator = (val: string) => {
   return true;
 };
 // 添加宾客接口
-const apiInfo = {
-  domain: "http://b33a604975.qicp.vip:17478",
-};
+
 const onSubmit = async () => {
   const { name, count, phoneNumber, isNeedTaxi } = formData.value;
   const postData = {
