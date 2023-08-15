@@ -7,6 +7,23 @@ import "vant/lib/index.css";
 import "@/styles/reset.scss";
 import "@/styles/animate.css";
 
-import { Button } from "vant";
+import {
+  Button,
+  Form,
+  Field,
+  CellGroup,
+  RadioGroup,
+  Radio,
+  Notify,
+} from "vant";
 
-createApp(App).use(router).use(Button).mount("#app");
+createApp(App)
+  .use(router)
+  .use(Button)
+  .use(Form)
+  .use(Field)
+  .use(CellGroup)
+  .use(RadioGroup)
+  .use(Radio)
+  .use(Notify)
+  .mount("#app");
