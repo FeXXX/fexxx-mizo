@@ -1,14 +1,27 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import { apiInfo } from "@/utils/domain";
+import { ref } from "vue";
 const qrcodeUrl = `${apiInfo.domain}/images/qrcode/wedding-group-1015.jpg`;
+
+const imgLoadedFlag = ref(false);
+let count = 0;
+const successLoadImg = () => {
+  count += 1;
+  if (count === 2) imgLoadedFlag.value = true;
+};
 </script>
 
 <template>
-  <div class="more-info">
+  <div v-show="imgLoadedFlag" class="more-info">
     <div class="bg-box"></div>
-    <img src="../../assets/images/join-group-bg.jpg" alt="" class="bg" />
-    <img :src="qrcodeUrl" alt="" class="qrcode" />
+    <img
+      src="../../assets/images/join-group-bg.jpg"
+      alt=""
+      class="bg"
+      @load="successLoadImg"
+    />
+    <img :src="qrcodeUrl" alt="" class="qrcode" @load="successLoadImg" />
   </div>
 </template>
 
