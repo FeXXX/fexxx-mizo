@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
 import router from "@/router";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { phone_reg, phone_waring_text } from "@/utils/validate";
 import { apiInfo } from "@/utils/domain";
 
@@ -12,6 +12,7 @@ const formData = ref({
   name: "",
   count: undefined,
   phoneNumber: "",
+  relationship: "",
   isNeedTaxi: undefined,
 });
 
@@ -22,14 +23,46 @@ const phoneNumberValidator = (val: string) => {
   }
   return true;
 };
-// 添加宾客接口
 
+// 关系
+const show = ref(false);
+const cascaderValue = ref("");
+const relationshipList = [
+  { text: "亲戚", value: "1" },
+  { text: "朋友", value: "2" },
+  { text: "同事", value: "3" },
+];
+const relationshipOptions = reactive([
+  {
+    text: "新郎",
+    value: "1",
+    children: [...relationshipList],
+  },
+  {
+    text: "新娘",
+    value: "2",
+    children: [...relationshipList],
+  },
+]);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onFinish = ({ selectedOptions }: any) => {
+  console.log(selectedOptions, "selectedOptions");
+  show.value = false;
+  formData.value.relationship = selectedOptions
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .map((option: any) => option.text)
+    .join("-");
+};
+
+// 添加宾客接口
 const onSubmit = async () => {
-  const { name, count, phoneNumber, isNeedTaxi } = formData.value;
+  const { name, count, phoneNumber, relationship, isNeedTaxi } = formData.value;
   const postData = {
     name: name,
     count: count,
     phoneNumber: phoneNumber,
+    relationship: relationship,
     isNeedTaxi: isNeedTaxi,
   };
   const res = await axios({
@@ -83,10 +116,20 @@ const onSubmit = async () => {
             { validator: phoneNumberValidator, message: phone_waring_text },
           ]"
         />
+        <!-- 与新人关系 -->
+        <van-field
+          v-model="formData.relationship"
+          is-link
+          readonly
+          label="与新人关系"
+          placeholder="请选择与新人关系"
+          @click="show = true"
+          :rules="[{ required: true, message: '请选择与新人关系' }]"
+        />
         <!-- 是否需要滴滴司机接驳 -->
         <van-field
           name="radio"
-          label="是否需要司机接驳"
+          label="是否需要司机接驳(新造地铁站to婚礼现场)"
           :rules="[{ required: true, message: '请选择' }]"
         >
           <template #input>
@@ -99,6 +142,15 @@ const onSubmit = async () => {
             </van-radio-group>
           </template>
         </van-field>
+        <van-popup v-model:show="show" round position="bottom">
+          <van-cascader
+            v-model="cascaderValue"
+            title="请选择与新人关系"
+            :options="relationshipOptions"
+            @finish="onFinish"
+            @close="show = false"
+          />
+        </van-popup>
       </van-cell-group>
       <div style="margin: 16px">
         <van-button round block type="primary" native-type="submit">

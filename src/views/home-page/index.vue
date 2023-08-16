@@ -21,7 +21,7 @@ const toAddCustomer = () => {
 <template>
   <div v-show="imgLoadedFlag" class="home">
     <img
-      src="../../../public/images/welcome-bg.jpg"
+      src="../../assets/images/welcome-bg.jpg"
       alt=""
       class="img animate__animated animate__zoomIn animate__faster"
       @load="successLoadImg"

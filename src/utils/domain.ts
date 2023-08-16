@@ -1,4 +1,4 @@
 /* eslint-disable prettier/prettier */
 export const apiInfo = {
-  domain: "http://b33a604975.qicp.vip:17478",
+  domain: "https://33f60497t5.oicp.vip",
 };

@@ -15,6 +15,8 @@ import {
   RadioGroup,
   Radio,
   Notify,
+  Cascader,
+  Popup,
 } from "vant";
 
 createApp(App)
@@ -26,4 +28,6 @@ createApp(App)
   .use(RadioGroup)
   .use(Radio)
   .use(Notify)
+  .use(Cascader)
+  .use(Popup)
   .mount("#app");
